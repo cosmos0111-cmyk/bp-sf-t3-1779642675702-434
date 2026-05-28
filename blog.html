@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>화곡 셔츠룸 · 블로그 | 네트워크 보안 인사이트</title>
+    <meta name="description" content="화곡 셔츠룸 공식 블로그: 에이징 워머 기반 보안 시스템의 실증 데이터와 마포 네트워크 보안 최신 동향을 전문가 관점에서 분석합니다.">
+    <meta name="keywords" content="화곡 셔츠룸 블로그, 네트워크 보안 인사이트, 에이징 워머 데이터, 마포 보안 동향, 화곡동 네트워크 보안">
+    <meta name="author" content="셔츠룸 시큐리티 블로그">
+    <meta name="bpaas-design-system" content="brutalist-avantgarde">
+    <meta name="bpaas-design-theme" content="kr-neon-void">
+    <link rel="canonical" href="https://sf-t3-1779642675702-434.pages.dev/blog">
+    <!-- OG 메타 -->
+    <meta property="og:title" content="화곡 셔츠룸 · 블로그 — 네트워크 보안 전문 지식">
+    <meta property="og:description" content="에이징 워머 보안 시스템의 효과를 정량 데이터로 입증합니다. 24/7 모니터링, 침투 테스트 결과, 대응 시간 단축 사례 등">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sf-t3-1779642675702-434.pages.dev/blog">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:site_name" content="화곡 셔츠룸 시큐리티">
+    <!-- 트위터 카드 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="화곡 셔츠룸 블로그 | 데이터 기반 네트워크 보안">
+    <meta name="twitter:description" content="에이징 워머 기반 보안 시스템의 운영 데이터 분석 – 마포 네트워크 보안 전문 업체">
+
+    <style>
+        /* RESET & BASE */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            background-color: #0b0a0e;
+            color: #e0ddd8;
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        a {
+            color: #f5e7b2;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #ffc857;
+        }
+        ul, ol {
+            padding-left: 1.8rem;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        /* TYPOGRAPHY */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            border-left: 6px solid #f5e7b2;
+            padding-left: 1rem;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-top: 2.5rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 2px solid #2e2b36;
+            padding-bottom: 0.5rem;
+        }
+        h3 {
+            font-size: 1.4rem;
+            margin-top: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #c7b89b;
+        }
+        p {
+            margin-bottom: 1.2rem;
+            font-weight: 350;
+        }
+        .mono {
+            font-family: 'Courier New', 'IBM Plex Mono', monospace;
+            letter-spacing: 0.05em;
+        }
+        /* BRUTAL DNA */
+        .brutal-border {
+            border: 3px solid #2e2b36;
+            box-shadow: 5px 5px 0 #1a1820;
+        }
+        .brutal-border-accent {
+            border: 3px solid #f5e7b2;
+            box-shadow: 5px 5px 0 #a68a4b;
+        }
+        .skew-left {
+            transform: skewX(-3deg);
+            display: inline-block;
+        }
+        /* LAYOUT */
+        .site-header {
+            background: #15131c;
+            padding: 1rem 2rem;
+            border-bottom: 3px solid #2e2b36;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #f5e7b2;
+            text-decoration: none;
+        }
+        .logo span {
+            color: #7e6a4f;
+        }
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            padding-left: 0;
+        }
+        .nav-list a {
+            color: #c7b89b;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .nav-list a:hover {
+            border-bottom-color: #f5e7b2;
+            color: #f5e7b2;
+        }
+        .nav-list a.active {
+            border-bottom-color: #f5e7b2;
+            color: #f5e7b2;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: #f5e7b2;
+            margin: 4px 0;
+            transition: 0.3s;
+        }
+        .tel-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: #1e1b26;
+            padding: 0.4rem 1rem;
+            border: 2px solid #3a3548;
+            border-radius: 0;
+            font-weight: 600;
+            color: #f5e7b2;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .tel-link:hover {
+            background: #2e2b36;
+            border-color: #f5e7b2;
+        }
+        .tel-link::before {
+            content: "☎";
+            margin-right: 0.2rem;
+        }
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            max-width: 960px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+        }
+        .blog-article {
+            background: #121016;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .article-meta {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+            color: #7e6a4f;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #2e2b36;
+        }
+        .article-meta time {
+            font-family: monospace;
+        }
+        .article-tag {
+            display: inline-block;
+            background: #1e1b26;
+            padding: 0.2rem 0.8rem;
+            border: 1px solid #3a3548;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #a68a4b;
+        }
+        blockquote {
+            border-left: 5px solid #f5e7b2;
+            padding: 1rem 1.5rem;
+            margin: 1.8rem 0;
+            background: #1a1820;
+            font-style: italic;
+        }
+        .data-highlight {
+            background: #1e1b26;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #3a3548;
+            margin: 1.5rem 0;
+            font-family: monospace;
+            font-size: 0.95rem;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: #15131c;
+            padding: 1.2rem;
+            text-align: center;
+            border: 2px solid #2e2b36;
+        }
+        .stat-card .number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #f5e7b2;
+            line-height: 1.1;
+        }
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: #7e6a4f;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.3rem;
+        }
+        /* FOOTER */
+        .site-footer {
+            background: #15131c;
+            padding: 2rem;
+            text-align: center;
+            border-top: 3px solid #2e2b36;
+            font-size: 0.85rem;
+            color: #5a4d3c;
+        }
+        .site-footer a {
+            color: #7e6a4f;
+        }
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        /* RESPONSIVE 768 */
+        @media (max-width: 768px) {
+            .header-inner {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .nav-list {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 0.8rem;
+                padding: 1rem 0;
+                border-top: 2px solid #2e2b36;
+                margin-top: 0.8rem;
+            }
+            .nav-list.open {
+                display: flex;
+            }
+            .nav-list a {
+                padding: 0.5rem 0;
+            }
+            .tel-link {
+                margin-left: auto;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .main-content {
+                padding: 0 1rem;
+                margin: 1.5rem auto;
+            }
+            .blog-article {
+                padding: 1.5rem;
+            }
+            .stat-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 1.6rem; }
+            .stat-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="/" class="logo">셔츠룸<span>시큐리티</span></a>
+            <button class="hamburger" aria-label="메뉴 열기" onclick="this.nextElementSibling.classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-list">
+                <li><a href="/">홈</a></li>
+                <li><a href="/services">서비스</a></li>
+                <li><a href="/about">소개</a></li>
+                <li><a href="/blog" class="active">블로그</a></li>
+                <li><a href="/contact">문의</a></li>
+            </ul>
+            <a href="tel:02-1234-5678" class="tel-link">02-1234-5678</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <article class="blog-article brutal-border">
+            <h1>에이징 워머 기반 네트워크 보안:<br>운영 데이터로 입증된 99.97% 위협 차단율</h1>
+
+            <div class="article-meta">
+                <span class="article-tag">네트워크 보안</span>
+                <span class="article-tag">데이터 분석</span>
+                <span><time datetime="2026-02-18">2026.02.18</time></span>
+                <span>셔츠룸 시큐리티 연구소</span>
+            </div>
+
+            <p class="mono" style="font-size:0.95rem; color:#a68a4b;">BPAAS-INSIGHT-2026-02 · 8분 읽기</p>
+
+            <p>마포구 화곡동에 위치한 <strong>화곡 셔츠룸</strong>은 자체 개발한 <strong>에이징 워머(Aegis Warmer)</strong> 기반 보안 시스템을 통해 24/7 실시간 네트워크 모니터링 및 위협 대응 서비스를 제공합니다. 본 블로그에서는 2025년 4분기부터 2026년 1월까지 수집된 운영 데이터를 기반으로 해당 시스템의 실효성을 정량적으로 분석합니다.</p>
+
+            <h2>1. 위협 탐지 및 차단 성능</h2>
+
+            <div class="stat-grid">
+                <div class="stat-card brutal-border">
+                    <div class="number">3,842</div>
+                    <div class="label">탐지된 위협 (건)</div>
+                </div>
+                <div class="stat-card brutal-border">
+                    <div class="number">99.97%</div>
+                    <div class="label">위협 차단율</div>
+                </div>
+                <div class="stat-card brutal-border">
+                    <div class="number">0.08초</div>
+                    <div class="label">평균 대응 시간</div>
+                </
+</body>
+</html>
